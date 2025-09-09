@@ -1,0 +1,535 @@
+// Global styles for Grid Clicker Game
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden; // Only disable horizontal scroll
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0a0a0a;
+}
+
+#__next {
+  height: 100%;
+}
+
+// Game container - main area with consistent margins and bottom padding for upgrade panel
+.game-container {
+  min-height: calc(100vh - 4rem);
+  margin: 2rem;
+  background: #111;
+  color: white;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  padding: 2rem;
+  padding-bottom: 6rem; // Extra padding at bottom for upgrade panel
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  position: relative;
+}
+
+// Top panel wrapper - similar to upgrade panel but at top
+.top-panel-wrapper {
+  position: absolute;
+  top: -1.9rem; // Moved higher to accommodate extra padding
+  right: 0.5rem;
+  width: 200px;
+  max-width: calc(50vw - 1rem);
+  height: 4rem; // Increased height for padding
+  background: #1a1a2e;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+  border-right: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0 0 8px 8px; // Bottom left and bottom right radius
+  box-shadow: inset 1px -1px 3px rgba(255, 255, 255, 0.1),
+    inset -1px 1px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: flex-end; // Align to bottom of wrapper
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem 1rem 0.5rem 1rem; // Top padding 2rem (1rem extra)
+  z-index: 10;
+}
+
+.gold-display {
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 80px;
+  flex: 1;
+
+  .gold-amount {
+    color: #FFD700;
+    font-weight: bold;
+    font-size: 0.9rem;
+    flex: 1; // Takes available space, grows to the left
+  }
+
+  .gold-icon {
+    font-size: 1rem;
+    color: #FFD700;
+    order: 2; // Icon goes to the right
+  }
+}
+
+.collection-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+
+  .collection-icon {
+    font-size: 1.3rem;
+  }
+}
+
+// Upgrade panel wrapper - single 3D panel with borders
+.upgrade-panel-wrapper {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 678px;
+  max-width: calc(100vw - 4rem);
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+
+  height: 6rem; // Increased height to contain buttons
+  background: #1a1a2e;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+  border-right: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px 8px 0 0; // Top left and top right radius
+  box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.1),
+  inset -1px -1px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: flex-start; // Align buttons to top of wrapper
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 2rem 2rem 2rem; // Top padding to push buttons down
+}
+
+// Common button styles
+.btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  flex: 1; // Buttons take equal space
+  min-width: 120px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Color upgrade button with gradient
+  &.color-upgrade {
+    background: linear-gradient(45deg,
+        #ff6b6b, #4ecdc4, #45b7d1, #96ceb4,
+        #feca57, #ff9ff3, #54a0ff, #5f27cd);
+    background-size: 300% 300%;
+    animation: gradientShift 3s ease infinite;
+    border-color: rgba(255, 255, 255, 0.4);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-1px) scale(1.02);
+    }
+  }
+
+  // Mobile responsive
+  @media (max-width: 768px) {
+    min-width: 100px;
+  }
+}
+
+// Gradient animation for color button
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// Grid layout styles
+.grid-container {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(var(--grid-width), 1fr);
+  grid-template-rows: repeat(var(--grid-height), 1fr);
+  aspect-ratio: var(--grid-width) / var(--grid-height);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+// Cell base styles
+.cell {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  position: relative;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+  }
+
+  &.colored {
+    border-width: 2px;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &.dragging {
+    opacity: 0.7;
+    transform: scale(0.95);
+    z-index: 100;
+  }
+
+  &.drag-over {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+// Click button styles
+.click-button {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: 8px;
+  color: #FFD700;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.2));
+    border-color: rgba(255, 215, 0, 0.6);
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // Ripple effect on click
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+  }
+
+  &.clicked::after {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Popup styles
+.popup {
+  position: fixed;
+  background: #222;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+  .popup-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: white;
+  }
+
+  .color-picker {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    .color-option {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease-out;
+
+      &:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.1);
+      }
+
+      &.selected {
+        border-color: white;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .popup-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+}
+
+// Loading and transition states
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.slide-enter {
+  transform: translateY(100%);
+}
+
+.slide-enter-active {
+  transform: translateY(0);
+  transition: transform 400ms ease-out;
+}
+
+.slide-exit {
+  transform: translateY(0);
+}
+
+.slide-exit-active {
+  transform: translateY(100%);
+  transition: transform 400ms ease-in;
+}
+
+// Utility classes
+.text-center {
+  text-align: center;
+}
+
+.text-gold {
+  color: #FFD700;
+}
+
+.text-success {
+  color: #4CAF50;
+}
+
+.text-warning {
+  color: #FF9800;
+}
+
+.text-error {
+  color: #f44336;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Modal overlay
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #222;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0;
+      color: white;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  .modal-content {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .game-container {
+    margin: 1rem;
+    padding: 1rem;
+    padding-bottom: 5rem;
+  }
+
+  .top-panel {
+    top: -0.25rem;
+    right: 0.25rem;
+    gap: 0.25rem;
+  }
+
+  .gold-display {
+    padding: 0.3rem 0.6rem;
+    min-width: 60px;
+
+    .gold-amount {
+      font-size: 0.8rem;
+    }
+
+    .gold-icon {
+      font-size: 0.9rem;
+    }
+  }
+
+  .collection-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    .collection-icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  .upgrade-panel-wrapper {
+    width: calc(100vw - 2rem);
+    height: 5rem;
+    padding: 0.75rem 1rem 1.5rem 1rem;
+  }
+
+  .cell {
+    min-height: 30px;
+  }
+
+  .click-button {
+    font-size: 1.2rem;
+  }
+
+  .popup {
+    padding: 1rem;
+    margin: 1rem;
+
+    .color-picker {
+      grid-template-columns: repeat(3, 1fr);
+
+      .color-option {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
+}

@@ -1,0 +1,191 @@
+// ColorAssignPopup component styles
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: #222;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0;
+  max-width: 400px;
+  width: 90vw;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  
+  h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.2rem;
+  }
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease-out;
+  
+  &:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+.info {
+  margin-bottom: 1.5rem;
+  
+  p {
+    margin: 0.25rem 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+  }
+}
+
+.colorPicker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.colorOption {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-out;
+  position: relative;
+  
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+  }
+  
+  &.selected {
+    border-color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    
+    &::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.cancelBtn,
+.assignBtn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  font-weight: 500;
+  border: none;
+}
+
+.cancelBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+}
+
+.assignBtn {
+  &.enabled {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    
+    &:hover {
+      background: linear-gradient(135deg, #45a049, #3d8b40);
+      transform: translateY(-1px);
+    }
+  }
+  
+  &.disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .popup {
+    width: 95vw;
+    margin: 1rem;
+  }
+  
+  .header {
+    padding: 0.75rem 1rem;
+    
+    h3 {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+  
+  .colorPicker {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .colorOption {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .actions {
+    flex-direction: column;
+    
+    .cancelBtn,
+    .assignBtn {
+      width: 100%;
+    }
+  }
+}
