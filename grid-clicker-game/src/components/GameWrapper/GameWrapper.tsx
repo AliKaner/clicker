@@ -43,9 +43,9 @@ const GameWrapper: React.FC = () => {
       </div>
 
       <header style={{ textAlign: 'center', padding: '1rem 0' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Grid Clicker Game</h1>
+        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Color Clicker</h1>
         <p style={{ opacity: 0.7 }}>
-          Dynamic grid with color fusion mechanics
+          Click click and fusion colors 
           {passiveIncome > 0 && (
             <span style={{ color: '#4CAF50', marginLeft: '1rem' }}>
               +{formatNumber(passiveIncome)}/sec
