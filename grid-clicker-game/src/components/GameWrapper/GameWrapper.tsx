@@ -42,10 +42,8 @@ const GameWrapper: React.FC = () => {
         </button>
       </div>
 
-      <header style={{ textAlign: "center", }}>
-        <h1 style={{ fontSize: "2rem", }}>
-          Color Clicker
-        </h1>
+      <header style={{ textAlign: "center" }}>
+        <h1 style={{ fontSize: "2rem" }}>Color Clicker</h1>
         <p style={{ opacity: 0.7 }}>
           Click click and fusion colors
           {passiveIncome > 0 && (
