@@ -9,40 +9,42 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 45px;
+  min-height: 25px;
+  min-width: 25px;
+  aspect-ratio: 1;
   position: relative;
   user-select: none;
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
-  
+
   &.empty {
     &:hover {
       border-color: rgba(255, 255, 255, 0.3);
     }
   }
-  
+
   &.colored {
     border-width: 2px;
-    
+
     &:hover {
       filter: brightness(1.1);
     }
   }
-  
+
   &.selected {
     border-color: rgba(255, 255, 255, 0.8) !important;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   }
-  
+
   &.dragging {
     opacity: 0.7;
     transform: scale(0.95);
     z-index: 100;
     cursor: grabbing;
   }
-  
+
   &.dragOver {
     border-color: rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.2);
@@ -70,7 +72,7 @@
   font-weight: bold;
   opacity: 0;
   transition: opacity 0.2s ease-out;
-  
+
   .cell:hover & {
     opacity: 1;
   }
@@ -80,13 +82,14 @@
 @media (max-width: 768px) {
   .cell {
     min-height: 35px;
+    min-width: 35px;
   }
-  
+
   .levelIndicator {
     font-size: 0.6rem;
     padding: 1px 3px;
   }
-  
+
   .emptyIndicator {
     font-size: 1.2rem;
   }

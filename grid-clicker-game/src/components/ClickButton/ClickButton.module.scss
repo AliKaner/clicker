@@ -1,10 +1,29 @@
 // ClickButton component styles
 
+@keyframes clickPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+}
+
 .clickButton {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.2),
+    rgba(255, 215, 0, 0.1)
+  );
   border: 2px solid rgba(255, 215, 0, 0.4);
   border-radius: 8px;
-  color: #FFD700;
+  color: #ffd700;
   cursor: pointer;
   transition: all 0.2s ease-out;
   display: flex;
@@ -13,34 +32,49 @@
   position: relative;
   overflow: hidden;
   min-height: 80px;
-  
+
   &:hover {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.2));
+    background: linear-gradient(
+      135deg,
+      rgba(255, 215, 0, 0.3),
+      rgba(255, 215, 0, 0.2)
+    );
     border-color: rgba(255, 215, 0, 0.6);
   }
-  
+
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.95);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
   }
-  
-  // Ripple effect on click
+
+  // Enhanced ripple effect on click
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 215, 0, 0.3);
+    background: radial-gradient(
+      circle,
+      rgba(255, 215, 0, 0.4) 0%,
+      rgba(255, 215, 0, 0.1) 70%,
+      transparent 100%
+    );
     transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s;
+    transition: width 0.4s ease-out, height 0.4s ease-out;
     pointer-events: none;
   }
-  
+
   &.clicked::after {
-    width: 100%;
-    height: 100%;
+    width: 120%;
+    height: 120%;
+  }
+
+  // Pulse animation for clicked state
+  &.clicked {
+    animation: clickPulse 0.4s ease-out;
   }
 }
 
@@ -68,19 +102,19 @@
   background: rgba(255, 215, 0, 0.1);
   border: 1px solid rgba(255, 215, 0, 0.3);
   border-radius: 4px;
-  color: #FFD700;
+  color: #ffd700;
   padding: 0.25rem 0.5rem;
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease-out;
-  
+
   &.canUpgrade {
     &:hover {
       background: rgba(255, 215, 0, 0.2);
       border-color: rgba(255, 215, 0, 0.5);
     }
   }
-  
+
   &.cantUpgrade {
     opacity: 0.5;
     cursor: not-allowed;
@@ -92,15 +126,15 @@
   .clickButton {
     min-height: 60px;
   }
-  
+
   .powerDisplay {
     font-size: 1.2rem;
   }
-  
+
   .levelDisplay {
     font-size: 0.9rem;
   }
-  
+
   .upgradeBtn {
     font-size: 0.7rem;
     padding: 0.2rem 0.4rem;

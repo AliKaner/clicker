@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useGameStore, initializeGameStore } from '@/store/gameStore';
-import { usePassiveIncome } from '@/store/usePassiveIncome';
-import Grid from '../Grid/Grid';
-import CollectionModal from '../CollectionModal/CollectionModal';
-import { formatNumber } from '@/utils/gameCalculations';
+import React from "react";
+import { useGameStore, initializeGameStore } from "@/store/gameStore";
+import { usePassiveIncome } from "@/store/usePassiveIncome";
+import Grid from "../Grid/Grid";
+import CollectionModal from "../CollectionModal/CollectionModal";
+import { formatNumber } from "@/utils/gameCalculations";
 
 const GameWrapper: React.FC = () => {
-  const { 
-    gold, 
-    isCollectionModalOpen, 
+  const {
+    gold,
+    isCollectionModalOpen,
     openCollectionModal,
     closeCollectionModal,
     getTotalPassiveIncome,
     discoveredColors,
     getColorUpgradeCost,
-    upgradeColor
+    upgradeColor,
   } = useGameStore();
-  
+
   // Initialize store and start passive income
   React.useEffect(() => {
     initializeGameStore();
   }, []);
-  
+
   // Start passive income generation
   usePassiveIncome();
-  
+
   const passiveIncome = getTotalPassiveIncome();
 
   return (
@@ -42,36 +42,39 @@ const GameWrapper: React.FC = () => {
         </button>
       </div>
 
-      <header style={{ textAlign: 'center', padding: '1rem 0' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Color Clicker</h1>
+      <header style={{ textAlign: "center", }}>
+        <h1 style={{ fontSize: "2rem", }}>
+          Color Clicker
+        </h1>
         <p style={{ opacity: 0.7 }}>
-          Click click and fusion colors 
+          Click click and fusion colors
           {passiveIncome > 0 && (
-            <span style={{ color: '#4CAF50', marginLeft: '1rem' }}>
+            <span style={{ color: "#4CAF50", marginLeft: "1rem" }}>
               +{formatNumber(passiveIncome)}/sec
             </span>
           )}
         </p>
       </header>
 
-      <main style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '2rem',
-        minHeight: '300px'
-      }}>
+      <main
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          minHeight: "300px",
+        }}
+      >
         <Grid />
       </main>
 
       {/* Upgrade panel - single 3D wrapper */}
       <div className="upgrade-panel-wrapper">
-        <button 
+        <button
           className="btn color-upgrade"
           onClick={() => {
             // Upgrade all colors at once
-            discoveredColors.forEach(color => {
+            discoveredColors.forEach((color) => {
               const cost = getColorUpgradeCost(color);
               if (gold >= cost) {
                 upgradeColor(color);
@@ -80,13 +83,18 @@ const GameWrapper: React.FC = () => {
           }}
           disabled={discoveredColors.length === 0}
         >
-          🎨 Upgrade All Colors ({formatNumber(
-            discoveredColors.reduce((total, color) => total + getColorUpgradeCost(color), 0)
-          )})
+          🎨 Upgrade All Colors (
+          {formatNumber(
+            discoveredColors.reduce(
+              (total, color) => total + getColorUpgradeCost(color),
+              0
+            )
+          )}
+          )
         </button>
       </div>
-      
-      <CollectionModal 
+
+      <CollectionModal
         isOpen={isCollectionModalOpen}
         onClose={closeCollectionModal}
       />
